@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jurnal Kurikulum</title>
+<meta name="description" content="Jurnal harian tim kurikulum: catat pekerjaan hari ini, rencanakan yang akan datang, dan pantau progres setiap pekerjaan secara detail.">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{
+  --bg:#f4f5f7;--card:#ffffff;--ink:#1b2333;--muted:#667085;--line:#e3e6eb;
+  --accent:#1f3a5f;--accent-soft:#e8edf4;--gold:#b08d57;--gold-soft:#f6efe3;
+  --warn:#a5672a;--warn-soft:#f8efe4;--danger:#a23b3b;
+  --blue:#1f3a5f;--blue-soft:#e8edf4;--violet:#8a6a3b;--violet-soft:#f6efe3;
+  --head:#16263f;--head-ink:#f4f1ea;--head-muted:#a9b4c6;
+  --radius:10px;--shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f141c;--card:#171e29;--ink:#e9ecf1;--muted:#98a2b3;--line:#273041;
+  --accent:#9bb5d8;--accent-soft:#1d2738;--gold:#d2b07a;--gold-soft:#2b2418;
+  --warn:#e0a463;--warn-soft:#2e2216;--danger:#ec8a8a;
+  --blue:#9bb5d8;--blue-soft:#1d2738;--violet:#d2b07a;--violet-soft:#2b2418;
+  --head:#0b1018;--head-ink:#efe9dd;--head-muted:#8d99ad;--shadow:none}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+header{background:var(--head);color:var(--head-ink);border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;flex-wrap:wrap}
+.brand{display:flex;gap:10px;align-items:center;text-decoration:none}
+.logo{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center;font:600 15px var(--serif);letter-spacing:.04em}
+.brand b{display:block;line-height:1.1;font:600 17px var(--serif);letter-spacing:.01em}.brand small{color:var(--head-muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+nav{display:flex;gap:2px;overflow-x:auto}
+nav a{padding:8px 12px;text-decoration:none;color:var(--head-muted);white-space:nowrap;font-size:14px;border-bottom:2px solid transparent}
+nav a:hover{color:var(--head-ink)}
+nav a.on{color:var(--head-ink);border-bottom-color:var(--gold);font-weight:600}
+main{padding:28px 0 60px}
+h1{font:600 28px/1.25 var(--serif);margin:0 0 4px;letter-spacing:-.005em}h2{font:600 18px var(--serif);margin:0 0 12px}
+.sub{color:var(--muted);margin:0 0 20px}
+.btn{border:1px solid var(--line);background:var(--card);padding:8px 14px;border-radius:7px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.btn:hover{border-color:var(--muted)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--card)}
+.btn.pri:hover{filter:brightness(1.12)}
+.btn.dng{color:var(--danger)}
+.btn.sm{padding:4px 10px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:2fr 1fr}
+@media(max-width:860px){.g4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.stat b{font:600 30px var(--serif);display:block;color:var(--accent)}.stat span{color:var(--muted);font-size:13px}
+.stat{text-decoration:none;border-top:3px solid var(--gold)}
+.stat .bar{margin-top:8px}
+.hero{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:20px}
+.date{color:var(--gold);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.av{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-size:11px;font-weight:700;background:var(--blue-soft);color:var(--blue);border:2px solid var(--card)}
+.avs{display:inline-flex}.avs .av+.av{margin-left:-4px}.avs .av{width:28px;height:28px;font-size:10px}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 70%,var(--gold)))}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:var(--gold-soft);color:var(--violet)}
+.muted{color:var(--muted)}.small{font-size:13px}
+.list>*+*{border-top:1px solid var(--line)}
+.li{padding:10px 0;display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer}
+.board{display:grid;grid-template-columns:repeat(4,minmax(240px,1fr));gap:14px;overflow-x:auto;padding-bottom:8px}
+.col{background:color-mix(in srgb,var(--line) 40%,transparent);border-radius:var(--radius);padding:10px;min-height:200px}
+.col h3{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:4px 4px 12px;padding-bottom:8px;border-bottom:2px solid var(--line);display:flex;justify-content:space-between}
+.col:nth-child(2) h3{border-bottom-color:var(--accent)}.col:nth-child(3) h3{border-bottom-color:var(--gold)}.col:nth-child(4) h3{border-bottom-color:#5b7f6a}
+.task{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;cursor:pointer;box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
+.task:hover{border-color:var(--gold);transform:translateY(-1px)}
+.task h4{margin:6px 0 8px;font:600 15.5px/1.35 var(--serif)}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-top:8px}
+.due-soon{color:var(--warn);font-weight:600}
+.empty{color:var(--muted);text-align:center;padding:24px 8px;font-size:13px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);padding:4px 10px;border-radius:20px;cursor:pointer;font-size:13px}
+.chip.on{background:var(--accent);color:var(--card);border-color:var(--accent)}
+.kendala{border-left:3px solid var(--warn)}
+.jr{padding:14px 0}
+.jr .k{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:8px}
+.kendala{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:6px 10px;margin-top:8px;font-size:14px}
+dialog{border:none;border-radius:14px;padding:0;width:min(560px,calc(100vw - 32px));background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+.dlg{padding:20px;max-height:85vh;overflow:auto}
+.dlg h2{margin-bottom:16px}
+label{display:block;font-size:13px;font-weight:600;margin:12px 0 4px}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+textarea{min-height:70px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.foot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
+.stage{display:flex;gap:8px;align-items:center;padding:6px 0}
+.stage input[type=checkbox]{width:auto}
+.stage span.done{text-decoration:line-through;color:var(--muted)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1}
+.ownchk{display:flex;gap:12px;flex-wrap:wrap}.ownchk label{display:flex;gap:5px;align-items:center;font-weight:400;margin:0}.ownchk input{width:auto}
+.nav-ext{opacity:.85}
+.loading{padding:60px 0;text-align:center;color:var(--muted)}
+.spin{width:28px;height:28px;border:3px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:sp 0.8s linear infinite;margin:0 auto 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.err{border-left:4px solid var(--danger)}
+.back{display:inline-block;margin-bottom:12px;color:var(--muted);text-decoration:none;font-size:14px}
+.back:hover{color:var(--ink)}
+.kv{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:860px){.kv{grid-template-columns:repeat(2,1fr)}}
+.kv>div{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+.kv b{display:block;font:600 22px var(--serif);color:var(--accent)}
+.kv>div>span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.note{font-size:13px;margin-top:6px}
+.note.late{color:var(--warn)}.note.ok{color:#4f7a62}
+@media (prefers-color-scheme:dark){.note.ok{color:#8cc3a4}}
+.prio{font-size:12px;color:var(--muted)}
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-size:11px}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:6px}
+.delta{font-size:12px;color:#4f7a62;font-weight:600}
+.syncdot{font-size:12px;color:var(--head-muted);white-space:nowrap}
+.filterbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.task a{text-decoration:none}
+</style>
+</head>
+<body>
+<header><div class="wrap top">
+  <a class="brand" href="/" data-link><div class="logo">JK</div><div><b>Jurnal Kurikulum</b><small>Catatan harian tim</small></div></a>
+  <nav id="nav"><a href="/" data-link>Beranda</a><a href="/jurnal" data-link>Jurnal Harian</a><a href="/pekerjaan" data-link>Pekerjaan</a><a class="nav-ext" href="https://docs.google.com/spreadsheets/d/1sBUGijaS8Qlfjk1kFwBua6b_GIpJ9PznFQgUXzrpRFw/edit" target="_blank" rel="noopener">Spreadsheet ↗</a><span class="syncdot" id="sync" style="align-self:center;padding-left:8px"></span></nav>
+</div></header>
+<main class="wrap" id="app"></main>
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+/* ===================== KONFIGURASI ===================== */
+const API='/api/data';
+const SHEET_LINK='https://docs.google.com/spreadsheets/d/1sBUGijaS8Qlfjk1kFwBua6b_GIpJ9PznFQgUXzrpRFw/edit';
+const TEAM=[
+  {id:'MH',nama:'M. Hamdi',peran:'Koordinator Kurikulum'},
+  {id:'RA',nama:'Rahma',peran:''},
+  {id:'NA',nama:'Nur Annisa',peran:''},
+  {id:'DN',nama:'Diana N',peran:''}];
+const STATUS=[['akan','Akan Datang'],['dikerjakan','Sedang Dikerjakan'],['ditinjau','Ditinjau'],['selesai','Selesai']];
+const PRIORITAS=['Rendah','Sedang','Tinggi'];
+
+/* ===================== STATE ===================== */
+let state={pekerjaan:[],jurnal:[]};
+let loaded=false,loadError=null,ownerFilter='all',journalFilter='all';
+
+/* ===================== UTIL ===================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nl=s=>esc(s).replace(/\n/g,'<br>');
+const todayISO=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Jakarta'});
+const nowISO=()=>{const d=new Date(Date.now()+7*3600e3);return d.toISOString().slice(0,19)+'+07:00'};
+const fmt=(iso,o={day:'numeric',month:'short'})=>iso?new Date(iso+'T00:00:00').toLocaleDateString('id-ID',o):'-';
+const dayDiff=(a,b)=>Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/864e5);
+const daysTo=iso=>dayDiff(todayISO(),iso);
+const dueText=iso=>{if(!iso)return'';const n=daysTo(iso);return n<0?`terlambat ${-n} hari`:n===0?'hari ini':`${n} hari lagi`};
+const member=id=>TEAM.find(t=>t.id===id)||{id,nama:id,peran:''};
+const memberByName=n=>TEAM.find(t=>t.nama.toLowerCase()===String(n).trim().toLowerCase());
+const initials=n=>String(n).split(/\s+/).filter(w=>w&&!/^\w\.$/.test(w)).map(w=>w[0]).join('').slice(0,2).toUpperCase()||'?';
+const shortName=id=>{const n=member(id).nama.replace(/^M\.\s*/,'');return n.split(' ')[0]};
+const avs=ids=>`<span class="avs">${ids.map(i=>`<span class="av" title="${esc(member(i).nama)}">${esc(i)}</span>`).join('')}</span>`;
+const bar=p=>`<div class="bar"><i style="width:${Math.max(0,Math.min(100,p))}%"></i></div>`;
+const doneCount=p=>p.tahapan.filter(t=>t.selesai).length;
+const byId=id=>state.pekerjaan.find(p=>p.id===id);
+const statusLabel=k=>(STATUS.find(s=>s[0]===k)||STATUS[0])[1];
+const num=v=>{const n=parseFloat(v);return isNaN(n)?0:n};
+const bool=v=>v===true||String(v).toUpperCase()==='TRUE';
+const d10=v=>v?String(v).slice(0,10):'';
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),3500)}
+function slug(s){let b=s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,60)||'pekerjaan';let x=b,i=2;while(byId(x))x=b+'-'+i++;return x}
+const uid=p=>p+'-'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function timeElapsed(p){if(!p.mulai||!p.tenggat)return 0;const tot=dayDiff(p.mulai,p.tenggat);if(tot<=0)return 100;return Math.round(Math.max(0,Math.min(1,dayDiff(p.mulai,todayISO())/tot))*100)}
+
+/* ===================== DATA (Spreadsheet) ===================== */
+function normalize(d){
+  const stat=v=>{const s=String(v||'').trim().toLowerCase();const f=STATUS.find(([k,l])=>k===s||l.toLowerCase()===s);return f?f[0]:'akan'};
+  const tah=(d.tahapan||[]).map(t=>({id:String(t.id),pid:String(t.pekerjaan_id),urutan:num(t.urutan),nama:String(t.nama_tahapan||''),selesai:bool(t.selesai)}));
+  state.pekerjaan=(d.pekerjaan||[]).map(r=>({
+    id:String(r.id),judul:String(r.judul||''),kategori:String(r.kategori||'Umum'),deskripsi:String(r.deskripsi||''),
+    prioritas:String(r.prioritas||'Sedang'),status:stat(r.status),progres:Math.round(num(r.progres_persen)),
+    mulai:d10(r.tanggal_mulai),tenggat:d10(r.tenggat),
+    pj:String(r.penanggung_jawab||'').split(',').map(s=>s.trim()).filter(Boolean).map(n=>(memberByName(n)||{id:initials(n)}).id),
+    tahapan:tah.filter(t=>t.pid===String(r.id)).sort((a,b)=>a.urutan-b.urutan)}));
+  state.jurnal=(d.jurnal||[]).map(r=>({
+    id:String(r.id),tanggal:d10(r.tanggal),anggota:(memberByName(r.anggota)||{id:initials(r.anggota)}).id,
+    pekerjaan:String(r.pekerjaan_id||''),pekerjaanJudul:String(r.pekerjaan_judul||''),progres:Math.round(num(r.progres_persen)),
+    dikerjakan:String(r.dikerjakan||''),rencana:String(r.rencana_berikutnya||''),kendala:String(r.kendala||''),dibuat:String(r.dibuat||'')}));
+}
+async function load(silent){
+  try{
+    const res=await fetch(API,{cache:'no-store'});const d=await res.json();
+    if(!d.ok)throw Object.assign(new Error(d.message||d.error||'Gagal memuat data'),{code:d.error});
+    normalize(d);loaded=true;loadError=null;
+  }catch(e){if(!loaded||!silent)loadError=e}
+  render();
+}
+const rowP=p=>({id:p.id,judul:p.judul,kategori:p.kategori,deskripsi:p.deskripsi,prioritas:p.prioritas,status:statusLabel(p.status),
+  progres_persen:p.progres,tanggal_mulai:p.mulai,tenggat:p.tenggat,penanggung_jawab:p.pj.map(i=>member(i).nama),diperbarui:todayISO()});
+const rowsT=p=>p.tahapan.map((t,i)=>({id:t.id,pekerjaan_id:p.id,urutan:i+1,nama_tahapan:t.nama,selesai:t.selesai,diperbarui:todayISO()}));
+const rowJ=j=>({id:j.id,tanggal:j.tanggal,anggota:member(j.anggota).nama,pekerjaan_id:j.pekerjaan,pekerjaan_judul:byId(j.pekerjaan)?.judul||j.pekerjaanJudul||'',
+  progres_persen:j.progres,dikerjakan:j.dikerjakan,rencana_berikutnya:j.rencana,kendala:j.kendala,dibuat:j.dibuat});
+
+let queue=Promise.resolve(),pending=0;
+function save(ops){
+  pending++;setSync();
+  queue=queue.then(async()=>{
+    try{const res=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({ops})});
+      const d=await res.json();if(!d.ok)throw new Error(d.message||d.error)}
+    catch(e){toast('Gagal menyimpan ke spreadsheet: '+e.message+'. Data dimuat ulang.');await load(true)}
+    finally{pending--;setSync()}
+  });
+}
+function setSync(){const el=$('#sync');if(el)el.textContent=pending?'● Menyimpan…':'✓ Tersimpan'}
+
+/* ===================== ROUTER ===================== */
+function go(path){history.pushState(null,'',path);render();window.scrollTo(0,0)}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[data-link]');
+  if(a&&!e.metaKey&&!e.ctrlKey){e.preventDefault();go(a.getAttribute('href'))}
+});
+window.addEventListener('popstate',render);
+window.addEventListener('focus',()=>{if(loaded&&!pending)load(true)});
+
+function render(){
+  const path=location.pathname.replace(/\/+$/,'')||'/';
+  document.querySelectorAll('#nav a[data-link]').forEach(a=>{const h=a.getAttribute('href');a.classList.toggle('on',h===path||(h!=='/'&&path.startsWith(h)))});
+  const app=$('#app');
+  if(loadError&&!loaded){app.innerHTML=viewError();return}
+  if(!loaded){app.innerHTML='<div class="loading"><div class="spin"></div>Memuat data dari spreadsheet…</div>';return}
+  let m;
+  if(path==='/jurnal'){document.title='Jurnal Harian · Jurnal Kurikulum';app.innerHTML=viewJurnal()}
+  else if(path==='/pekerjaan'){document.title='Pekerjaan · Jurnal Kurikulum';app.innerHTML=viewPekerjaan()}
+  else if((m=path.match(/^\/pekerjaan\/(.+)$/))){const p=byId(decodeURIComponent(m[1]));document.title=(p?p.judul:'Tidak ditemukan')+' · Jurnal Kurikulum';app.innerHTML=p?viewDetail(p):viewNotFound()}
+  else{document.title='Jurnal Kurikulum';app.innerHTML=viewHome()}
+}
+
+/* ===================== VIEWS ===================== */
+function viewError(){
+  const nc=loadError.code==='not_configured';
+  return `<div class="card err" style="max-width:640px;margin:40px auto"><h2>${nc?'Database belum tersambung':'Data belum bisa dimuat'}</h2>
+  <p class="muted">${nc?'Isi <b>GOOGLE_SHEETS_WEBHOOK_URL</b> dan <b>GOOGLE_SHEETS_SECRET</b> di Netlify → Project configuration → Environment variables, lalu deploy ulang.':esc(loadError.message)}</p>
+  <div class="row"><button class="btn pri" onclick="loadError=null;loaded=false;render();load()">Coba lagi</button><a class="btn" href="${SHEET_LINK}" target="_blank" rel="noopener">Buka Spreadsheet</a></div></div>`;
+}
+const viewNotFound=()=>`<a class="back" href="/pekerjaan" data-link>← Semua pekerjaan</a><div class="card empty">Pekerjaan tidak ditemukan.</div>`;
+
+function viewHome(){
+  const t=todayISO(),aktif=state.pekerjaan.filter(p=>p.status!=='selesai');
+  const avg=aktif.length?Math.round(aktif.reduce((a,p)=>a+p.progres,0)/aktif.length):0;
+  const cnt=k=>state.pekerjaan.filter(p=>p.status===k).length;
+  const jt=sortJ(state.jurnal.filter(j=>j.tanggal===t));
+  const penulis=[...new Set(jt.map(j=>j.anggota))];
+  const belum=TEAM.filter(m=>!penulis.includes(m.id)).map(m=>shortName(m.id));
+  const tenggat=aktif.filter(p=>p.status!=='akan'&&p.tenggat).sort((a,b)=>a.tenggat.localeCompare(b.tenggat)).slice(0,5);
+  const akan=state.pekerjaan.filter(p=>p.status==='akan').sort((a,b)=>(a.mulai||'').localeCompare(b.mulai||''));
+  return `
+  <div class="hero"><div>
+    <div class="date">${fmt(t,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>
+    <h1>Apa yang dikerjakan tim kurikulum hari ini?</h1>
+    <div class="row" style="margin-top:8px">${avs(TEAM.map(m=>m.id))}<span class="muted small">${TEAM.map(m=>esc(m.nama)).join(', ')}</span></div>
+  </div><div class="row">
+    <button class="btn pri" onclick="formJurnal()">＋ Tulis jurnal</button>
+    <a class="btn" href="/pekerjaan" data-link>Lihat papan pekerjaan</a></div></div>
+  <div class="grid g4" style="margin-bottom:16px">
+    <a class="card stat" href="/pekerjaan" data-link><b>${avg}%</b><span>Rata-rata progres aktif · dari ${aktif.length} pekerjaan belum selesai</span>${bar(avg)}</a>
+    <a class="card stat" href="/pekerjaan" data-link><b>${cnt('dikerjakan')}</b><span>Sedang dikerjakan</span></a>
+    <a class="card stat" href="/pekerjaan" data-link><b>${cnt('ditinjau')}</b><span>Menunggu tinjauan</span></a>
+    <a class="card stat" href="/pekerjaan" data-link><b>${cnt('akan')} / ${cnt('selesai')}</b><span>Akan datang / Selesai</span></a>
+  </div>
+  <div class="grid g2">
+    <div class="card"><div class="row" style="justify-content:space-between"><h2>Jurnal hari ini</h2><a class="small muted" href="/jurnal" data-link>Semua jurnal →</a></div>
+      <p class="muted small" style="margin-top:-6px">${jt.length} entri dari ${penulis.length} anggota${belum.length?` · Belum menulis jurnal hari ini: ${esc(belum.join(', '))}`:''}</p>
+      ${jt.length?`<div class="list">${jt.map(j=>jurnalCard(j)).join('')}</div>`:`<div class="empty">Belum ada jurnal hari ini.<br><button class="btn sm" style="margin-top:8px" onclick="formJurnal()">Tulis jurnal</button></div>`}
+    </div>
+    <div class="grid" style="align-content:start">
+      <div class="card"><h2>Tenggat terdekat</h2>${tenggat.length?`<div class="list">${tenggat.map(p=>`
+        <a class="li" href="/pekerjaan/${encodeURIComponent(p.id)}" data-link style="text-decoration:none"><div style="flex:1"><b>${esc(p.judul)}</b><div class="small ${daysTo(p.tenggat)<=7?'due-soon':'muted'}">${fmt(p.tenggat)} · ${dueText(p.tenggat)}</div>${bar(p.progres)}</div><b>${p.progres}%</b></a>`).join('')}</div>`:'<div class="empty">Tidak ada tenggat.</div>'}</div>
+      <div class="card"><h2>Akan datang</h2>${akan.length?`<div class="list">${akan.map(p=>`
+        <a class="li" href="/pekerjaan/${encodeURIComponent(p.id)}" data-link style="text-decoration:none"><div><b>${esc(p.judul)}</b><div class="small muted">Mulai ${fmt(p.mulai)}</div></div>${avs(p.pj)}</a>`).join('')}</div>`:'<div class="empty">Tidak ada.</div>'}</div>
+    </div>
+  </div>`;
+}
+
+const sortJ=js=>js.slice().sort((a,b)=>(b.tanggal+b.dibuat).localeCompare(a.tanggal+a.dibuat));
+function jurnalCard(j,delta){
+  const m=member(j.anggota),p=byId(j.pekerjaan),judul=p?p.judul:j.pekerjaanJudul;
+  return `<div class="jr">
+    <div class="row" style="justify-content:space-between"><div class="row"><span class="av">${esc(m.id)}</span><div><b>${esc(m.nama)}</b> <span class="muted small">${esc(m.peran)}</span>
+      <div class="small muted">${fmt(j.tanggal,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}${judul?' · '+(p?`<a href="/pekerjaan/${encodeURIComponent(p.id)}" data-link>${esc(judul)}</a>`:esc(judul)):''}</div></div></div>
+    <div class="row"><b>${j.progres}%</b>${delta!=null?`<span class="delta">${delta>=0?'+':''}${delta} poin</span>`:''}<button class="btn sm" onclick="formJurnal('${j.id}')">Ubah</button></div></div>
+    ${bar(j.progres)}
+    <div class="k">Dikerjakan</div><div>${nl(j.dikerjakan)}</div>
+    ${j.rencana?`<div class="k">Rencana berikutnya</div><div>${nl(j.rencana)}</div>`:''}
+    ${j.kendala?`<div class="kendala"><b>Kendala:</b> ${esc(j.kendala)}</div>`:''}
+  </div>`;
+}
+
+function viewJurnal(){
+  const t=todayISO(),groups={};
+  sortJ(state.jurnal.filter(j=>journalFilter==='all'||j.anggota===journalFilter)).forEach(j=>(groups[j.tanggal]??=[]).push(j));
+  return `<div class="hero"><div><h1>Jurnal Harian</h1><p class="sub" style="margin:0">Catatan pekerjaan harian seluruh tim kurikulum, terbaru di atas.</p></div><button class="btn pri" onclick="formJurnal()">＋ Tulis entri</button></div>
+  <div class="filterbar"><span class="small muted">Anggota:</span><div class="chips">
+    <button class="chip ${journalFilter==='all'?'on':''}" onclick="journalFilter='all';render()">Semua anggota</button>
+    ${TEAM.map(m=>`<button class="chip ${journalFilter===m.id?'on':''}" onclick="journalFilter='${m.id}';render()">${esc(shortName(m.id))}</button>`).join('')}</div></div>
+  ${Object.keys(groups).length?Object.entries(groups).map(([d,js])=>`<div class="card" style="margin-bottom:14px"><div class="row" style="justify-content:space-between"><h2>${d===t?'Hari ini · ':''}${fmt(d,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</h2><span class="small muted">${js.length} entri</span></div><div class="list">${js.map(j=>jurnalCard(j)).join('')}</div></div>`).join(''):`<div class="card empty">Belum ada jurnal. Klik “Tulis entri” untuk memulai.</div>`}`;
+}
+
+function viewPekerjaan(){
+  const list=state.pekerjaan.filter(p=>ownerFilter==='all'||p.pj.includes(ownerFilter));
+  return `<div class="hero"><div><h1>Pekerjaan</h1><p class="sub" style="margin:0">Semua pekerjaan tim kurikulum, dari yang akan datang hingga selesai.</p></div>
+    <div class="row"><a class="btn" href="${SHEET_LINK}" target="_blank" rel="noopener">▦ Buka Spreadsheet</a><button class="btn pri" onclick="formPekerjaan()">＋ Tambah pekerjaan</button></div></div>
+  <div class="filterbar"><span class="small muted">Penanggung jawab:</span><div class="chips">
+    <button class="chip ${ownerFilter==='all'?'on':''}" onclick="ownerFilter='all';render()">Semua</button>
+    ${TEAM.map(m=>`<button class="chip ${ownerFilter===m.id?'on':''}" onclick="ownerFilter='${m.id}';render()" title="${esc(m.nama)}">${m.id}</button>`).join('')}</div></div>
+  <div class="board">${STATUS.map(([k,l])=>{const items=list.filter(p=>p.status===k).sort((a,b)=>(a.tenggat||'9').localeCompare(b.tenggat||'9'));return `
+    <div class="col"><h3><span>${l}</span><span>${items.length}</span></h3>
+    ${items.length?items.map(p=>`<a class="task" style="display:block;color:inherit" href="/pekerjaan/${encodeURIComponent(p.id)}" data-link>
+      <span class="tag">${esc(p.kategori||'Umum')}</span><h4>${esc(p.judul)}</h4>
+      <div class="small muted" style="margin-bottom:4px">${doneCount(p)}/${p.tahapan.length} tahapan · ${p.progres}%</div>${bar(p.progres)}
+      <div class="meta"><span class="${p.status!=='selesai'&&p.tenggat&&daysTo(p.tenggat)<=7?'due-soon':''}">${fmt(p.tenggat)} · ${p.status==='selesai'?'selesai':dueText(p.tenggat)}</span>${avs(p.pj)}</div></a>`).join(''):'<div class="empty">Tidak ada pekerjaan</div>'}
+    </div>`}).join('')}</div>`;
+}
+
+function history_(p){
+  const js=state.jurnal.filter(j=>j.pekerjaan===p.id).sort((a,b)=>(a.tanggal+a.dibuat).localeCompare(b.tanggal+b.dibuat));
+  let prev=0;return js.map(j=>{const d=j.progres-prev;prev=j.progres;return{j,delta:d}});
+}
+function chart(p,hist){
+  if(!p.mulai||!p.tenggat)return'<div class="empty">Isi tanggal mulai dan tenggat untuk melihat grafik.</div>';
+  const W=640,H=200,L=34,R=12,T=12,B=26,tot=Math.max(1,dayDiff(p.mulai,p.tenggat));
+  const x=d=>L+(Math.max(0,Math.min(tot,dayDiff(p.mulai,d)))/tot)*(W-L-R),y=v=>T+(1-v/100)*(H-T-B);
+  const pts=[[p.mulai,0],...hist.map(h=>[h.j.tanggal,h.j.progres])];
+  const grid=[0,25,50,75,100].map(v=>`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`).join('');
+  const tx=(d,a)=>`<text x="${x(d)}" y="${H-8}" text-anchor="${a}">${fmt(d)}</text>`;
+  const today=todayISO(),showToday=dayDiff(p.mulai,today)>0&&dayDiff(today,p.tenggat)>0;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Grafik progres">${grid}
+    <line x1="${x(p.mulai)}" y1="${y(0)}" x2="${x(p.tenggat)}" y2="${y(100)}" stroke="var(--gold)" stroke-width="2" stroke-dasharray="5 4"/>
+    ${showToday?`<line x1="${x(today)}" x2="${x(today)}" y1="${T}" y2="${H-B}" stroke="var(--muted)" stroke-dasharray="2 3"/>`:''}
+    <polyline fill="none" stroke="var(--accent)" stroke-width="2.5" points="${pts.map(([d,v])=>x(d)+','+y(v)).join(' ')}"/>
+    ${pts.slice(1).map(([d,v])=>`<circle cx="${x(d)}" cy="${y(v)}" r="4" fill="var(--accent)"><title>${fmt(d)}: ${v}%</title></circle>`).join('')}
+    ${tx(p.mulai,'start')}${tx(p.tenggat,'end')}</svg>
+    <div class="legend"><span><i style="background:var(--accent)"></i>Progres dilaporkan</span><span><i style="background:var(--gold)"></i>Jadwal ideal</span></div>`;
+}
+function viewDetail(p){
+  const te=timeElapsed(p),gap=te-p.progres,hist=history_(p),kendala=sortJ(state.jurnal.filter(j=>j.pekerjaan===p.id&&j.kendala));
+  return `<a class="back" href="/pekerjaan" data-link>← Semua pekerjaan</a>
+  <div class="hero"><div><span class="tag">${esc(p.kategori)}</span> <span class="prio">· Prioritas ${esc(p.prioritas.toLowerCase())} · ${statusLabel(p.status)}</span>
+    <h1 style="margin-top:6px">${esc(p.judul)}</h1>${p.deskripsi?`<p class="sub" style="margin:0">${nl(p.deskripsi)}</p>`:''}</div>
+    <div class="row"><button class="btn pri" onclick="formJurnal(null,'${p.id}')">Catat progres</button><button class="btn" onclick="formPekerjaan('${p.id}')">Ubah</button></div></div>
+  <div class="kv" style="margin-bottom:16px">
+    <div><span>Progres</span><b>${p.progres}%</b><div class="small muted">${doneCount(p)} dari ${p.tahapan.length} tahapan selesai</div></div>
+    <div><span>Waktu berjalan</span><b>${te}%</b><div class="note ${gap>0?'late':'ok'}">${gap>0?`Progres tertinggal ${gap} poin dari jadwal`:'Progres sesuai atau mendahului jadwal'}</div></div>
+    <div><span>Mulai</span><b>${fmt(p.mulai)}</b></div>
+    <div><span>Tenggat</span><b>${fmt(p.tenggat)}</b><div class="small ${p.tenggat&&daysTo(p.tenggat)<=7&&p.status!=='selesai'?'due-soon':'muted'}">${p.status==='selesai'?'selesai':dueText(p.tenggat)}</div></div>
+    <div><span>Penanggung jawab</span><div style="margin-top:6px">${p.pj.map(i=>`<div class="row" style="gap:6px;margin-bottom:4px"><span class="av">${esc(i)}</span><span class="small">${esc(member(i).nama)}</span></div>`).join('')||'<span class="small muted">Belum ada</span>'}</div></div>
+  </div>
+  <div class="grid g2">
+    <div class="grid" style="align-content:start">
+      <div class="card"><h2>Grafik progres</h2><p class="small muted" style="margin-top:-8px">Progres yang dilaporkan di setiap entri jurnal</p>${chart(p,hist)}</div>
+      <div class="card"><h2>Riwayat progres</h2><p class="small muted" style="margin-top:-8px">${hist.length} entri jurnal terkait pekerjaan ini</p>
+        ${hist.length?`<div class="list">${hist.slice().reverse().map(h=>jurnalCard(h.j,h.delta)).join('')}</div>`:'<div class="empty">Belum ada entri jurnal untuk pekerjaan ini.</div>'}</div>
+    </div>
+    <div class="grid" style="align-content:start">
+      <div class="card"><h2>Tahapan</h2><p class="small muted" style="margin-top:-8px">Centang tahapan yang sudah selesai</p>
+        <div>${p.tahapan.map(t=>`<div class="stage"><input type="checkbox" ${t.selesai?'checked':''} onchange="toggleStage('${p.id}','${t.id}')" aria-label="${esc(t.nama)}"><span class="${t.selesai?'done':''}" style="flex:1">${esc(t.nama)}</span><button class="btn sm" onclick="renameStage('${p.id}','${t.id}')">Ubah</button><button class="btn sm dng" onclick="delStage('${p.id}','${t.id}')" aria-label="Hapus">✕</button></div>`).join('')||'<div class="small muted">Belum ada tahapan.</div>'}</div>
+        <div class="row" style="margin-top:8px"><input id="newStage" placeholder="Tahapan baru…" style="flex:1" onkeydown="if(event.key==='Enter')addStage('${p.id}')"><button class="btn sm" onclick="addStage('${p.id}')">Tambah</button></div></div>
+      ${kendala.length?`<div class="card"><h2>Kendala tercatat</h2><div class="list">${kendala.map(j=>`<div style="padding:8px 0"><div>${esc(j.kendala)}</div><div class="small muted">${esc(member(j.anggota).nama)} · ${fmt(j.tanggal)}</div></div>`).join('')}</div></div>`:''}
+      <div class="card"><h2>Kelola</h2><div class="row"><label class="small" style="margin:0">Status</label><select style="flex:1" onchange="setStatus('${p.id}',this.value)">${STATUS.map(([k,l])=>`<option value="${k}" ${p.status===k?'selected':''}>${l}</option>`).join('')}</select></div>
+        <div class="foot" style="justify-content:flex-start"><button class="btn dng" onclick="delPekerjaan('${p.id}')">Hapus pekerjaan</button></div></div>
+    </div>
+  </div>`;
+}
+
+/* ===================== AKSI ===================== */
+function openDlg(html){$('#dlgBody').innerHTML=html;$('#dlg').showModal()}
+function closeDlg(){$('#dlg').close()}
+$('#dlg').addEventListener('click',e=>{if(e.target.id==='dlg')closeDlg()});
+
+function formPekerjaan(id){
+  const p=id?byId(id):{judul:'',kategori:'',deskripsi:'',prioritas:'Sedang',status:'akan',progres:0,mulai:todayISO(),tenggat:'',pj:[],tahapan:[]};
+  openDlg(`<h2>${id?'Ubah':'Tambah'} pekerjaan</h2>
+  <label for="fJudul">Judul</label><input id="fJudul" value="${esc(p.judul)}">
+  <label for="fDesk">Deskripsi</label><textarea id="fDesk">${esc(p.deskripsi)}</textarea>
+  <div class="two"><div><label for="fKat">Kategori</label><input id="fKat" value="${esc(p.kategori)}" placeholder="Umum, Ujian, Rapot…"></div>
+  <div><label for="fPrio">Prioritas</label><select id="fPrio">${PRIORITAS.map(x=>`<option ${p.prioritas===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
+  <div class="two"><div><label for="fStatus">Status</label><select id="fStatus">${STATUS.map(([k,l])=>`<option value="${k}" ${p.status===k?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div><label for="fProg">Progres: <span id="fPv">${p.progres}</span>%</label><input id="fProg" type="range" min="0" max="100" step="5" value="${p.progres}" oninput="fPv.textContent=this.value"></div></div>
+  <div class="two"><div><label for="fMulai">Tanggal mulai</label><input id="fMulai" type="date" value="${p.mulai}"></div><div><label for="fTenggat">Tenggat</label><input id="fTenggat" type="date" value="${p.tenggat}"></div></div>
+  <label>Penanggung jawab</label><div class="ownchk">${TEAM.map(m=>`<label><input type="checkbox" value="${m.id}" ${p.pj.includes(m.id)?'checked':''}> ${esc(m.nama)}</label>`).join('')}</div>
+  ${id?'':`<label for="fTahap">Tahapan (satu per baris)</label><textarea id="fTahap" placeholder="Pembentukan panitia&#10;Gladi bersih&#10;…"></textarea>`}
+  <div class="foot"><button class="btn" onclick="closeDlg()">Batal</button><button class="btn pri" onclick="savePekerjaan('${id||''}')">Simpan</button></div>`);
+}
+function savePekerjaan(id){
+  const judul=$('#fJudul').value.trim();if(!judul)return toast('Judul wajib diisi');
+  const tenggat=$('#fTenggat').value;if(!tenggat)return toast('Tenggat wajib diisi');
+  const data={judul,deskripsi:$('#fDesk').value.trim(),kategori:$('#fKat').value.trim()||'Umum',prioritas:$('#fPrio').value,status:$('#fStatus').value,
+    mulai:$('#fMulai').value,tenggat,progres:+$('#fProg').value,pj:[...document.querySelectorAll('.ownchk input:checked')].map(i=>i.value)};
+  let p;const ops=[];
+  if(id){p=byId(id);Object.assign(p,data)}
+  else{const pid=slug(judul);p={id:pid,...data,tahapan:$('#fTahap').value.split('\n').map(s=>s.trim()).filter(Boolean).map((n,i)=>({id:pid+'-'+(i+1)+'-'+Date.now().toString(36),nama:n,selesai:false}))};state.pekerjaan.push(p);
+    if(p.tahapan.length)ops.push({op:'upsert',table:'tahapan',rows:rowsT(p)})}
+  ops.unshift({op:'upsert',table:'pekerjaan',rows:[rowP(p)]});
+  closeDlg();if(id)render();else go('/pekerjaan/'+encodeURIComponent(p.id));toast('Pekerjaan disimpan');save(ops);
+}
+function setStatus(id,v){const p=byId(id);p.status=v;if(v==='selesai')p.progres=100;render();save([{op:'upsert',table:'pekerjaan',rows:[rowP(p)]}])}
+function saveStages(p){render();save([{op:'upsert',table:'tahapan',rows:rowsT(p)}])}
+function toggleStage(id,sid){const p=byId(id),t=p.tahapan.find(t=>t.id===sid);t.selesai=!t.selesai;saveStages(p)}
+function addStage(id){const v=$('#newStage').value.trim();if(!v)return;const p=byId(id);p.tahapan.push({id:id+'-'+uid('t'),nama:v,selesai:false});saveStages(p)}
+function renameStage(id,sid){const p=byId(id),t=p.tahapan.find(t=>t.id===sid);const v=prompt('Nama tahapan',t.nama);if(v&&v.trim()){t.nama=v.trim();saveStages(p)}}
+function delStage(id,sid){const p=byId(id);if(!confirm('Hapus tahapan ini?'))return;p.tahapan=p.tahapan.filter(t=>t.id!==sid);render();
+  save([{op:'delete',table:'tahapan',rows:[{id:sid}]},...(p.tahapan.length?[{op:'upsert',table:'tahapan',rows:rowsT(p)}]:[])])}
+function delPekerjaan(id){if(!confirm('Hapus pekerjaan ini beserta tahapannya? Jurnal terkait tetap disimpan.'))return;const p=byId(id);
+  state.pekerjaan=state.pekerjaan.filter(x=>x.id!==id);go('/pekerjaan');toast('Pekerjaan dihapus');
+  save([{op:'delete',table:'pekerjaan',rows:[{id}]},...(p.tahapan.length?[{op:'delete',table:'tahapan',rows:p.tahapan.map(t=>({id:t.id}))}]:[])])}
+
+function formJurnal(id,pid){
+  const j=id?state.jurnal.find(x=>x.id===id):{tanggal:todayISO(),anggota:'MH',pekerjaan:pid||'',progres:pid?byId(pid).progres:0,dikerjakan:'',rencana:'',kendala:''};
+  openDlg(`<h2>${id?'Ubah':'Tulis'} jurnal</h2>
+  <div class="two"><div><label for="jTgl">Tanggal</label><input id="jTgl" type="date" value="${j.tanggal}"></div>
+  <div><label for="jAng">Anggota</label><select id="jAng">${TEAM.map(m=>`<option value="${m.id}" ${j.anggota===m.id?'selected':''}>${esc(m.nama)}</option>`).join('')}</select></div></div>
+  <label for="jPk">Pekerjaan terkait</label><select id="jPk" onchange="const p=byId(this.value);if(p){jProg.value=p.progres;jPv.textContent=p.progres}"><option value="">— Tidak terkait pekerjaan —</option>${state.pekerjaan.map(p=>`<option value="${p.id}" ${j.pekerjaan===p.id?'selected':''}>${esc(p.judul)}</option>`).join('')}</select>
+  <label for="jProg">Progres pekerjaan: <span id="jPv">${j.progres}</span>%</label><input id="jProg" type="range" min="0" max="100" step="5" value="${j.progres}" oninput="jPv.textContent=this.value">
+  <label for="jDik">Dikerjakan</label><textarea id="jDik">${esc(j.dikerjakan)}</textarea>
+  <label for="jRen">Rencana berikutnya</label><textarea id="jRen">${esc(j.rencana)}</textarea>
+  <label for="jKen">Kendala (opsional)</label><input id="jKen" value="${esc(j.kendala)}">
+  <div class="foot">${id?`<button class="btn dng" onclick="delJurnal('${id}')">Hapus</button>`:''}<button class="btn" onclick="closeDlg()">Batal</button><button class="btn pri" onclick="saveJurnal('${id||''}')">Simpan</button></div>`);
+}
+function saveJurnal(id){
+  const dik=$('#jDik').value.trim();if(!dik)return toast('Isi bagian “Dikerjakan”');
+  const data={tanggal:$('#jTgl').value||todayISO(),anggota:$('#jAng').value,pekerjaan:$('#jPk').value,progres:+$('#jProg').value,dikerjakan:dik,rencana:$('#jRen').value.trim(),kendala:$('#jKen').value.trim()};
+  let j;if(id){j=state.jurnal.find(x=>x.id===id);Object.assign(j,data)}else{j={id:uid('j'),...data,dibuat:nowISO()};state.jurnal.push(j)}
+  const ops=[{op:'upsert',table:'jurnal',rows:[rowJ(j)]}],p=byId(j.pekerjaan);
+  if(p&&!id){p.progres=j.progres;if(p.status==='akan'&&j.progres>0)p.status='dikerjakan';ops.push({op:'upsert',table:'pekerjaan',rows:[rowP(p)]})}
+  closeDlg();render();toast('Jurnal disimpan');save(ops);
+}
+function delJurnal(id){if(!confirm('Hapus jurnal ini?'))return;state.jurnal=state.jurnal.filter(j=>j.id!==id);closeDlg();render();save([{op:'delete',table:'jurnal',rows:[{id}]}])}
+
+render();load();
+</script>
+</body>
+</html>
