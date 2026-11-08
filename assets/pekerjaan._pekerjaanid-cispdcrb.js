@@ -1,0 +1,1 @@
+import{$ as e}from"./index-CiW18HUx.js";var t=e;export{t as notFoundComponent};
